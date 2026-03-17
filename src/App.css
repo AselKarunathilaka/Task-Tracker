@@ -1,39 +1,58 @@
+/* =========================================================
+   GLOBAL RESET & TYPOGRAPHY
+   ========================================================= */
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 html, body, #root {
-  height: 100%;
+  min-height: 100vh;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: #1f2937;
+  /* Prevent dark-mode overrides from hiding text */
+  color-scheme: light; 
 }
 
+/* =========================================================
+   BACKGROUND & MAIN LAYOUT
+   ========================================================= */
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  color: #1f2937;
-  background:
-    radial-gradient(circle at 10% 20%, rgba(37, 99, 235, 0.22), transparent 25%),
-    radial-gradient(circle at 90% 15%, rgba(236, 72, 153, 0.16), transparent 22%),
-    radial-gradient(circle at 20% 85%, rgba(16, 185, 129, 0.16), transparent 24%),
-    radial-gradient(circle at 85% 80%, rgba(249, 115, 22, 0.12), transparent 22%),
-    linear-gradient(135deg, #eef2ff 0%, #f8fafc 50%, #eff6ff 100%);
+  /* A modern, subtle mesh gradient background */
+  background: 
+    radial-gradient(circle at 15% 50%, rgba(37, 99, 235, 0.08), transparent 25%),
+    radial-gradient(circle at 85% 30%, rgba(147, 51, 234, 0.08), transparent 25%),
+    linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
   background-attachment: fixed;
 }
 
 .app {
   min-height: 100vh;
-  padding: 40px 16px 20px;
+  padding: 40px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px; /* This prevents the Admin and Task panels from overlapping */
 }
 
+/* =========================================================
+   CARD CONTAINERS (Glassmorphism Effect)
+   ========================================================= */
 .container,
 .admin-card,
 .auth-card {
-  max-width: 950px;
-  margin: 0 auto 24px;
-  background: rgba(255, 255, 255, 0.78);
-  backdrop-filter: blur(10px);
-  border-radius: 18px;
-  padding: 32px;
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 900px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 24px;
+  padding: 40px;
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.04), 
+    inset 0 1px 0 rgba(255, 255, 255, 1);
+  border: 1px solid rgba(255, 255, 255, 0.6);
 }
 
 .auth-shell {
@@ -47,73 +66,140 @@ body {
   max-width: 450px;
 }
 
-.auth-card h1,
-.container h1,
-.admin-card h2 {
-  margin-top: 0;
+h1, h2, h3 {
+  color: #111827;
+  margin-bottom: 8px;
 }
 
+/* =========================================================
+   INPUTS & FORMS (Fixes white text issue)
+   ========================================================= */
 .auth-form {
   display: grid;
-  gap: 12px;
-  margin-top: 18px;
+  gap: 16px;
+  margin-top: 24px;
 }
 
-.auth-form input,
-.task-input-section input {
-  padding: 14px 16px;
-  border: 1px solid #d1d5db;
+.task-input-section {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 32px;
+  padding: 20px;
+  background: #f8fafc;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+}
+
+.task-input-section.multi {
+  grid-template-columns: 2fr 1fr 1fr auto;
+}
+
+input {
+  padding: 14px 18px;
+  border: 1px solid #cbd5e1;
   border-radius: 12px;
   font-size: 1rem;
   outline: none;
+  background: #ffffff;
+  color: #111827; /* Forces user-typed text (title, date, time) to be dark */
+  transition: all 0.2s ease-in-out;
+  font-family: inherit;
 }
 
-.auth-form input:focus,
-.task-input-section input:focus {
-  border-color: #2563eb;
+input::placeholder {
+  color: #94a3b8; /* Light gray placeholder text */
 }
 
-.auth-form button,
-.task-input-section button,
-.logout-btn,
-.delete-btn,
-.filters button {
+input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+}
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+button {
   border: none;
   border-radius: 12px;
-  padding: 12px 16px;
+  padding: 14px 24px;
   cursor: pointer;
   font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  font-family: inherit;
 }
 
 .auth-form button,
-.task-input-section button,
-.logout-btn {
+.task-input-section button {
   background: #2563eb;
+  color: white;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+}
+
+.auth-form button:hover,
+.task-input-section button:hover {
+  background: #1d4ed8;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
+}
+
+.logout-btn {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.logout-btn:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+.delete-btn {
+  background: #fee2e2;
+  color: #ef4444;
+  padding: 10px 16px;
+  font-size: 0.9rem;
+}
+
+.delete-btn:hover {
+  background: #ef4444;
   color: white;
 }
 
 .link-btn {
-  margin-top: 16px;
-  border: none;
   background: transparent;
-  color: #2563eb;
-  cursor: pointer;
+  color: #3b82f6;
+  padding: 0;
+  margin-top: 16px;
+  text-decoration: none;
 }
 
+.link-btn:hover {
+  text-decoration: underline;
+  color: #1d4ed8;
+}
+
+/* =========================================================
+   STATS SECTION
+   ========================================================= */
 .topbar {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 12px;
-  margin-bottom: 20px;
+  gap: 16px;
+  margin-bottom: 32px;
   flex-wrap: wrap;
+}
+
+.topbar p {
+  color: #64748b;
+  font-size: 1.05rem;
 }
 
 .stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
 }
 
 .admin-stats {
@@ -121,136 +207,196 @@ body {
 }
 
 .stat-card {
-  background: rgba(255,255,255,0.6);
-  backdrop-filter: blur(6px);
-  border-radius: 14px;
-  padding: 18px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 24px;
   text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06);
 }
 
 .stat-card h3 {
-  margin: 0 0 10px;
-  color: #4b5563;
+  margin: 0 0 8px;
+  color: #64748b;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .stat-card span {
-  font-size: 1.8rem;
-  font-weight: bold;
+  font-size: 2.5rem;
+  font-weight: 800;
   color: #2563eb;
 }
 
-.task-input-section {
-  display: grid;
-  gap: 12px;
-  margin-bottom: 20px;
-}
-
-.task-input-section.multi {
-  grid-template-columns: 2fr 1fr 1fr auto;
-}
-
+/* =========================================================
+   TASK FILTERS & LIST
+   ========================================================= */
 .toolbar {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 22px;
-  gap: 12px;
-  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin-bottom: 24px;
 }
 
 .filters {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
+  display: inline-flex;
+  gap: 4px;
+  background: #f1f5f9;
+  padding: 6px;
+  border-radius: 14px;
 }
 
 .filters button {
-  background: #e5e7eb;
-  color: #111827;
+  background: transparent;
+  color: #64748b;
+  padding: 10px 20px;
+  font-weight: 500;
+}
+
+.filters button:hover {
+  background: #e2e8f0;
+  color: #1e293b;
 }
 
 .active-filter {
-  background: #2563eb !important;
-  color: white !important;
+  background: #ffffff !important;
+  color: #2563eb !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .task-list {
   list-style: none;
-  padding: 0;
-  margin: 0;
 }
 
 .task-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 12px;
-  background: rgba(255,255,255,0.6);
-  backdrop-filter: blur(6px);
-  border: 1px solid #e5e7eb;
-  border-radius: 14px;
-  padding: 14px 16px;
+  gap: 16px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 20px 24px;
   margin-bottom: 12px;
+  transition: all 0.2s ease;
+}
+
+.task-item:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.03);
 }
 
 .task-left {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
   flex: 1;
+  cursor: pointer;
 }
 
 .task-left input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
+  width: 22px;
+  height: 22px;
   cursor: pointer;
+  accent-color: #2563eb;
+}
+
+.task-title {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #1e293b;
+  transition: color 0.2s;
 }
 
 .done {
   text-decoration: line-through;
-  color: #9ca3af;
+  color: #94a3b8;
 }
 
-.delete-btn {
-  background: #ef4444;
-  color: white;
+.task-left small {
+  display: block;
+  margin-top: 6px;
+  color: #64748b;
+  font-size: 0.9rem;
 }
 
 .overdue-task {
-  border-color: #f59e0b;
+  border-left: 5px solid #ef4444;
 }
 
 .empty-state,
 .center-message {
   text-align: center;
-  padding: 28px;
-  color: #6b7280;
+  padding: 60px 20px;
+  color: #64748b;
+  font-size: 1.1rem;
+  background: #f8fafc;
+  border-radius: 16px;
+  border: 1px dashed #cbd5e1;
 }
 
+/* =========================================================
+   ADMIN PANEL TABLE
+   ========================================================= */
 .admin-table-wrap {
   overflow-x: auto;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
 }
 
 .admin-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 16px;
+}
+
+.admin-table th {
+  background: #f8fafc;
+  font-weight: 600;
+  color: #475569;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
 }
 
 .admin-table th,
 .admin-table td {
-  padding: 12px;
-  border-bottom: 1px solid #e5e7eb;
+  padding: 16px 20px;
+  border-bottom: 1px solid #e2e8f0;
   text-align: left;
+}
+
+.admin-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.admin-table tbody tr:hover {
+  background: #f8fafc;
 }
 
 .uid-cell {
   font-size: 0.85rem;
-  color: #6b7280;
-  word-break: break-all;
+  color: #94a3b8;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
+/* =========================================================
+   RESPONSIVE DESIGN (Mobile view)
+   ========================================================= */
 @media (max-width: 800px) {
+  .app {
+    padding: 20px 12px;
+  }
+  
+  .container, .admin-card {
+    padding: 24px;
+  }
+
   .stats,
   .admin-stats,
   .task-input-section.multi {
@@ -259,11 +405,11 @@ body {
 
   .task-item {
     flex-direction: column;
-    align-items: stretch;
+    align-items: flex-start;
   }
 
-  .delete-btn,
-  .logout-btn {
+  .delete-btn {
     width: 100%;
+    margin-top: 12px;
   }
 }

@@ -92,113 +92,112 @@ function TaskPanel({ user, profile }) {
     return taskDate < new Date();
   };
 
+  // Removed the `<div className="app">` wrapper here
   return (
-    <div className="app">
-      <div className="container">
-        <div className="topbar">
-          <div>
-            <h1>Task Tracker</h1>
-            <p>
-              Welcome, {profile?.name || user.email}
-              {profile?.role === "admin" ? " (Admin)" : ""}
-            </p>
-          </div>
-
-          <button className="logout-btn" onClick={() => signOut(auth)}>
-            Logout
-          </button>
+    <div className="container">
+      <div className="topbar">
+        <div>
+          <h1>Task Tracker</h1>
+          <p>
+            Welcome, {profile?.name || user.email}
+            {profile?.role === "admin" ? " (Admin)" : ""}
+          </p>
         </div>
 
-        <section className="stats">
-          <div className="stat-card">
-            <h3>Total</h3>
-            <span>{total}</span>
-          </div>
-          <div className="stat-card">
-            <h3>Active</h3>
-            <span>{active}</span>
-          </div>
-          <div className="stat-card">
-            <h3>Completed</h3>
-            <span>{completed}</span>
-          </div>
-        </section>
-
-        <section className="task-input-section multi">
-          <input
-            type="text"
-            placeholder="Task title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-          <input
-            type="date"
-            value={dueDate}
-            onChange={(e) => setDueDate(e.target.value)}
-          />
-          <input
-            type="time"
-            value={dueTime}
-            onChange={(e) => setDueTime(e.target.value)}
-          />
-          <button onClick={addTask}>Add Task</button>
-        </section>
-
-        <section className="toolbar">
-          <div className="filters">
-            <button
-              className={filter === "all" ? "active-filter" : ""}
-              onClick={() => setFilter("all")}
-            >
-              All
-            </button>
-            <button
-              className={filter === "active" ? "active-filter" : ""}
-              onClick={() => setFilter("active")}
-            >
-              Active
-            </button>
-            <button
-              className={filter === "completed" ? "active-filter" : ""}
-              onClick={() => setFilter("completed")}
-            >
-              Completed
-            </button>
-          </div>
-        </section>
-
-        <ul className="task-list">
-          {filteredTasks.map((task) => (
-            <li
-              key={task.id}
-              className={`task-item ${isOverdue(task) ? "overdue-task" : ""}`}
-            >
-              <label className="task-left">
-                <input
-                  type="checkbox"
-                  checked={task.completed}
-                  onChange={() => toggleTask(task)}
-                />
-                <div>
-                  <div className={task.completed ? "done" : ""}>{task.title}</div>
-                  <small>
-                    {task.dueDate} at {task.dueTime}
-                    {isOverdue(task) ? " • Overdue" : ""}
-                  </small>
-                </div>
-              </label>
-
-              <button className="delete-btn" onClick={() => deleteTask(task.id)}>
-                Delete
-              </button>
-            </li>
-          ))}
-        </ul>
-
-        {filteredTasks.length === 0 && (
-          <div className="empty-state">No tasks found.</div>
-        )}
+        <button className="logout-btn" onClick={() => signOut(auth)}>
+          Logout
+        </button>
       </div>
+
+      <section className="stats">
+        <div className="stat-card">
+          <h3>Total</h3>
+          <span>{total}</span>
+        </div>
+        <div className="stat-card">
+          <h3>Active</h3>
+          <span>{active}</span>
+        </div>
+        <div className="stat-card">
+          <h3>Completed</h3>
+          <span>{completed}</span>
+        </div>
+      </section>
+
+      <section className="task-input-section multi">
+        <input
+          type="text"
+          placeholder="Task title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <input
+          type="date"
+          value={dueDate}
+          onChange={(e) => setDueDate(e.target.value)}
+        />
+        <input
+          type="time"
+          value={dueTime}
+          onChange={(e) => setDueTime(e.target.value)}
+        />
+        <button onClick={addTask}>Add Task</button>
+      </section>
+
+      <section className="toolbar">
+        <div className="filters">
+          <button
+            className={filter === "all" ? "active-filter" : ""}
+            onClick={() => setFilter("all")}
+          >
+            All
+          </button>
+          <button
+            className={filter === "active" ? "active-filter" : ""}
+            onClick={() => setFilter("active")}
+          >
+            Active
+          </button>
+          <button
+            className={filter === "completed" ? "active-filter" : ""}
+            onClick={() => setFilter("completed")}
+          >
+            Completed
+          </button>
+        </div>
+      </section>
+
+      <ul className="task-list">
+        {filteredTasks.map((task) => (
+          <li
+            key={task.id}
+            className={`task-item ${isOverdue(task) ? "overdue-task" : ""}`}
+          >
+            <label className="task-left">
+              <input
+                type="checkbox"
+                checked={task.completed}
+                onChange={() => toggleTask(task)}
+              />
+              <div>
+                <div className={task.completed ? "done" : ""}>{task.title}</div>
+                <small>
+                  {task.dueDate} at {task.dueTime}
+                  {isOverdue(task) ? " • Overdue" : ""}
+                </small>
+              </div>
+            </label>
+
+            <button className="delete-btn" onClick={() => deleteTask(task.id)}>
+              Delete
+            </button>
+          </li>
+        ))}
+      </ul>
+
+      {filteredTasks.length === 0 && (
+        <div className="empty-state">No tasks found.</div>
+      )}
     </div>
   );
 }

@@ -45,10 +45,11 @@ function App() {
   const isAdmin = profile?.role === "admin";
 
   return (
-    <>
+    // Moved the .app wrapper here to contain both panels properly
+    <div className="app">
       <TaskPanel user={user} profile={profile} />
       {isAdmin && <AdminPanel />}
-    </>
+    </div>
   );
 }
 
